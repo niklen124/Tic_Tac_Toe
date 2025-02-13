@@ -5,7 +5,7 @@ import { useState } from "react";
 function Square({ value, onSquareClick }) {
   return (
     <button
-      className="w-20 h-20 text-3xl font-bold flex items-center justify-center border border-gray-500"
+      className="w-20 h-20 text-3xl font-bold flex items-center justify-center border border-gray-500 hover:border-gray-700"
       onClick={onSquareClick}
     >
       {value}
@@ -36,9 +36,9 @@ function Board({ isNext, squares, onPlay }) {
   }
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <div className="text-xl font-bold mb-4">{status}</div>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-3 gap-1">
         {squares.map((square, i) => (
           <Square key={i} value={square} onSquareClick={() => handleClick(i)} />
         ))}
@@ -70,10 +70,16 @@ export default function Home() {
     setIsNext(!isNext);
   }
 
+  function resetGame() {
+    setSquares(Array(9).fill(null));
+    setIsNext(!isNext);
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-8">
-      <h1 className="text-3xl font-bold mb-6">Tic Tac Toe</h1>
+    <main className="flex min-h-screen flex-col items-center justify-between p-32">
+      <h1 className="text-5xl font-bold mb-6">Tic Tac Toe</h1>
       <Board isNext={isNext} squares={squares} onPlay={handlePlay} />
+      <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700" onClick={resetGame}>Reset</button>
     </main>
   );
 }
